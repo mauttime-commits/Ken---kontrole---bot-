@@ -1,0 +1,354 @@
+import os
+import telebot
+from telebot import types
+
+TOKEN = os.getenv("8705606322:AAEBR17-N_jwKAgbgNDivfPi0SIn0h6rfao")
+bot = telebot.TeleBot(8705606322:AAEBR17-N_jwKAgbgNDivfPi0SIn0h6rfao)
+
+# ====== КЛАВИАТУРА ======
+def main_menu():
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = types.KeyboardButton("📢 Объявления")
+    btn2 = types.KeyboardButton("📋 Собрания")
+    btn3 = types.KeyboardButton("🛡 Администрация")
+    btn4 = types.KeyboardButton("📝 Шаблоны")
+    btn5 = types.KeyboardButton("👑 Руководство")
+    btn6 = types.KeyboardButton("📞 Контакты")
+    markup.add(btn1, btn2)
+    markup.add(btn3, btn4)
+    markup.add(btn5, btn6)
+    return markup
+
+# ====== /START ======
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.send_message(
+        message.chat.id,
+        "🔥 *KentRP Control Bot запущен!*\n\n"
+        "Добро пожаловать в панель управления проектом.\n"
+        "Выбери нужный раздел через кнопки ниже 👇",
+        parse_mode="Markdown",
+        reply_markup=main_menu()
+    )
+
+# ====== /HELP ======
+@bot.message_handler(commands=['help'])
+def help_cmd(message):
+    bot.send_message(
+        message.chat.id,
+        "📌 *Доступные команды:*\n\n"
+        "/start — открыть главное меню\n"
+        "/help — список команд\n\n"
+        "Также можно использовать кнопки внизу 👇",
+        parse_mode="Markdown",
+        reply_markup=main_menu()
+    )
+
+# ====== ОБЪЯВЛЕНИЯ ======
+@bot.message_handler(func=lambda message: message.text == "📢 Объявления")
+def announcements(message):
+    text = (
+        "📢 *Раздел: Объявления*\n\n"
+        "Готовые шаблоны:\n"
+        "• Собрание администрации\n"
+        "• Срочное уведомление\n"
+        "• Объявление для состава\n"
+        "• Напоминание о регламенте\n\n"
+        "Напиши:\n"
+        "`собрание`\n"
+        "`срочно`\n"
+        "`состав`\n"
+        "`регламент`"
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+# ====== СОБРАНИЯ ======
+@bot.message_handler(func=lambda message: message.text == "📋 Собрания")
+def meetings(message):
+    text = (
+        "📋 *Раздел: Собрания*\n\n"
+        "Доступно:\n"
+        "• Анонс собрания администрации\n"
+        "• Повестка собрания\n"
+        "• Экстренное собрание\n\n"
+        "Напиши:\n"
+        "`анонс`\n"
+        "`повестка`\n"
+        "`экстренно`"
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+# ====== АДМИНИСТРАЦИЯ ======
+@bot.message_handler(func=lambda message: message.text == "🛡 Администрация")
+def admin_section(message):
+    text = (
+        "🛡 *Раздел: Администрация*\n\n"
+        "Здесь можно получить:\n"
+        "• Нормы активности\n"
+        "• Основные правила\n"
+        "• Напоминание о регламенте\n"
+        "• Информацию для состава\n\n"
+        "Напиши:\n"
+        "`актив`\n"
+        "`правила`\n"
+        "`регламент`\n"
+        "`инфо`"
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+# ====== ШАБЛОНЫ ======
+@bot.message_handler(func=lambda message: message.text == "📝 Шаблоны")
+def templates(message):
+    text = (
+        "📝 *Раздел: Шаблоны*\n\n"
+        "Доступные шаблоны:\n"
+        "• Отпуск\n"
+        "• Назначение\n"
+        "• Снятие\n"
+        "• Предупреждение\n"
+        "• Созыв администрации\n\n"
+        "Напиши:\n"
+        "`отпуск`\n"
+        "`назначение`\n"
+        "`снятие`\n"
+        "`предупреждение`\n"
+        "`созыв`"
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+# ====== РУКОВОДСТВО ======
+@bot.message_handler(func=lambda message: message.text == "👑 Руководство")
+def management(message):
+    text = (
+        "👑 *Раздел: Руководство*\n\n"
+        "Инструменты для руководства проекта:\n"
+        "• Созыв старшего состава\n"
+        "• Уведомление лидеров\n"
+        "• Срочный сбор администрации\n"
+        "• Важное объявление\n\n"
+        "Напиши:\n"
+        "`старший состав`\n"
+        "`лидеры`\n"
+        "`срочный сбор`\n"
+        "`важно`"
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+# ====== КОНТАКТЫ ======
+@bot.message_handler(func=lambda message: message.text == "📞 Контакты")
+def contacts(message):
+    text = (
+        "📞 *Контакты / Помощь*\n\n"
+        "Если требуется помощь по боту:\n"
+        "• Обратиться к разработчику\n"
+        "• Проверить работу команд\n"
+        "• Перезапустить сервис при необходимости\n\n"
+        "Бот создан для проекта *KentRP* 🔥"
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+# ====== ТЕКСТОВЫЕ ШАБЛОНЫ ======
+
+@bot.message_handler(func=lambda message: message.text.lower() == "собрание")
+def meeting_text(message):
+    text = (
+        "📋 *Собрание администрации*\n\n"
+        "Уважаемая администрация проекта *KentRP*,\n"
+        "сегодня состоится общее собрание администрации.\n\n"
+        "На собрании будут обсуждаться следующие темы:\n"
+        "• Форум\n"
+        "• Проект\n"
+        "• Новые правила для администрации\n"
+        "• Изменения в регламенте\n"
+        "• Работа администрации за последнюю неделю\n"
+        "• Дальнейшее развитие проекта и состава\n\n"
+        "Просьба всем быть на связи и присутствовать вовремя."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "срочно")
+def urgent_text(message):
+    text = (
+        "🚨 *Срочное уведомление!*\n\n"
+        "Всем администраторам необходимо срочно выйти на связь.\n"
+        "Ожидайте дальнейших указаний от руководства проекта."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "состав")
+def team_text(message):
+    text = (
+        "📢 *Объявление для состава*\n\n"
+        "Уважаемый состав проекта *KentRP*,\n"
+        "просьба быть внимательнее к выполнению своих обязанностей,\n"
+        "соблюдать регламент и своевременно реагировать на поручения руководства."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "регламент")
+def reg_text(message):
+    text = (
+        "📌 *Напоминание о регламенте*\n\n"
+        "Всем администраторам необходимо ознакомиться с действующим регламентом\n"
+        "и строго соблюдать установленные правила проекта.\n\n"
+        "Любые нарушения будут рассматриваться руководством."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "анонс")
+def announce_meeting(message):
+    text = (
+        "📋 *Анонс собрания администрации*\n\n"
+        "Сегодня состоится собрание администрации.\n"
+        "Просьба всем участникам подготовиться и присутствовать в назначенное время."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "повестка")
+def agenda(message):
+    text = (
+        "📝 *Повестка собрания*\n\n"
+        "1. Обсуждение форума\n"
+        "2. Обсуждение текущего состояния проекта\n"
+        "3. Новые правила для администрации\n"
+        "4. Глобальные изменения регламента\n"
+        "5. Работа администрации за последнюю неделю\n"
+        "6. Дальнейшие планы проекта"
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "экстренно")
+def emergency_meeting(message):
+    text = (
+        "🚨 *Экстренное собрание!*\n\n"
+        "Всем администраторам необходимо срочно собраться.\n"
+        "Требуется немедленное присутствие всего состава."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "актив")
+def activity(message):
+    text = (
+        "⏳ *Нормы активности администрации*\n\n"
+        "• Будние дни: 1.5 часа\n"
+        "• Выходные дни: 1 час\n\n"
+        "Соблюдение норм активности обязательно."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "правила")
+def rules(message):
+    text = (
+        "📜 *Основные правила администрации*\n\n"
+        "• Соблюдать регламент проекта\n"
+        "• Уважительно общаться с игроками и составом\n"
+        "• Выполнять указания старшего состава\n"
+        "• Не злоупотреблять полномочиями\n"
+        "• Своевременно реагировать на обращения"
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "инфо")
+def info(message):
+    text = (
+        "✨ *Важная информация для администрации KentRP*\n\n"
+        "Данная система предназначена для удобного доступа\n"
+        "к основным шаблонам, регламентам и рабочей информации проекта."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "отпуск")
+def vacation(message):
+    text = (
+        "🌴 *Шаблон отпуска*\n\n"
+        "Уведомляем участников проекта о том, что\n"
+        "*Nikita_Belov* уходит в отпуск на *7 дней*.\n\n"
+        "Желаем хорошего отдыха ❤️"
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "назначение")
+def appoint(message):
+    text = (
+        "👑 *Шаблон назначения*\n\n"
+        "Поздравляем!\n"
+        "Игрок назначен на новую должность в составе проекта.\n"
+        "Желаем успехов и продуктивной работы."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "снятие")
+def remove(message):
+    text = (
+        "📌 *Шаблон снятия*\n\n"
+        "Игрок снят с занимаемой должности.\n"
+        "Благодарим за проделанную работу в составе проекта."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "предупреждение")
+def warning(message):
+    text = (
+        "⚠️ *Шаблон предупреждения*\n\n"
+        "Администратору выносится предупреждение за нарушение регламента.\n"
+        "Просьба ознакомиться с замечаниями и не допускать повторных нарушений."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "созыв")
+def summon(message):
+    text = (
+        "📢 *Созыв администрации*\n\n"
+        "Всем администраторам необходимо выйти на связь.\n"
+        "Просьба оперативно отреагировать на данное уведомление."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "старший состав")
+def senior_team(message):
+    text = (
+        "👑 *Созыв старшего состава*\n\n"
+        "Всем представителям старшего состава необходимо выйти на связь.\n"
+        "Ожидайте дальнейших указаний от руководства проекта."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "лидеры")
+def leaders(message):
+    text = (
+        "👥 *Уведомление лидеров*\n\n"
+        "Всем лидерам организаций необходимо быть на связи.\n"
+        "В ближайшее время поступит важная информация."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "срочный сбор")
+def urgent_gathering(message):
+    text = (
+        "🚨 *Срочный сбор администрации*\n\n"
+        "Всем администраторам необходимо срочно собраться.\n"
+        "Сбор обязателен для всего действующего состава."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda message: message.text.lower() == "важно")
+def important(message):
+    text = (
+        "📢 *Важное объявление от руководства*\n\n"
+        "Просьба всем участникам проекта внимательно следить\n"
+        "за последующими сообщениями и изменениями по проекту."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+
+# ====== ЕСЛИ НЕ ПОНЯЛ КОМАНДУ ======
+@bot.message_handler(func=lambda message: True)
+def fallback(message):
+    bot.send_message(
+        message.chat.id,
+        "❌ Команда не распознана.\n\n"
+        "Нажми /start чтобы открыть меню.",
+        reply_markup=main_menu()
+    )
+
+print("KentRP Control Bot запущен...")
+bot.infinity_polling()
