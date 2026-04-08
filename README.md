@@ -1,1 +1,1 @@
-# Ken---kontrole---bot-
+# Kent---kontrole---bot-
